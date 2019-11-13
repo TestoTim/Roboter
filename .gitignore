@@ -4,3 +4,6 @@
 .project
 Roboter.iml
 .idea
+/lib/
+/out/
+/src/test/
