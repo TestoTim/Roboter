@@ -1,6 +1,13 @@
 package de.tils.roboter.main;
 
+import de.tils.roboter.utils.Logger;
+
 public class Main {
+
+	/**
+	 *	Logger for Project
+	 */
+	public static final Logger logger = new Logger("Robot");
 
 	/**
 	 * Infos form project
@@ -12,6 +19,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		projectInfos();
+		logger.error("Nils ist ein error");
 	}
 
 	/**
@@ -23,7 +31,7 @@ public class Main {
 				"|   __ \\.-----.|  |--.-----.|  |_.-----.----.\n" +
 				"|      <|  _  ||  _  |  _  ||   _|  -__|   _|\n" +
 				"|___|__||_____||_____|_____||____|_____|__|  \n" +
-				"   Version: %s  |  Coder: %s and %s             ",
+				"   Version: %s  |  Coder: %s and %s          \n",
 				Info.VERSION, Info.CODER[0], Info.CODER[1]));
 	}
 }

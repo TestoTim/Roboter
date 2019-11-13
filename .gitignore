@@ -7,3 +7,5 @@ Roboter.iml
 /lib/
 /out/
 /src/test/
+/log/
+log.txt
