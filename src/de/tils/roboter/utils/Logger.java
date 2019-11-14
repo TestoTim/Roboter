@@ -19,19 +19,27 @@ public class Logger implements ILogger {
     private final List<String> history = new ArrayList<>();
 
 
-    public Logger(String name) {
+    private final boolean save;
+
+
+    public Logger(String name, boolean save) {
         this.name = name;
+        this.save = save;
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::onShutdown, name + "-ShutdownHook"));
     }
 
 
     @Override
-    public void println(LogLevel level, String... lines) {
+    public void print(LogLevel level, boolean nextLine, String... lines) {
         Arrays.asList(lines).forEach(line -> {
             String output = String.format("[%s] [%s] [%s] %s", name, dataFormat.format(new Date()), level.toString(), line);
             history.add(output);
-            System.out.println(output);
+
+            if (nextLine)
+                System.out.println(output);
+            else
+                System.out.print(output);
         });
     }
 
@@ -46,28 +54,30 @@ public class Logger implements ILogger {
      * save the logger history in log directory
      */
     private void saveHistory() {
-        StringBuilder text = new StringBuilder();
-        BufferedWriter output;
+        if (save) {
+            StringBuilder text = new StringBuilder();
+            BufferedWriter output;
 
-        for (String line : history) {
-            text.append(line).append("\n");
-        }
-
-        try {
-            String date = new SimpleDateFormat("dd-MM-yyyy_hh-mm-ss").format(new Date());
-            File file = new File(String.format("log/log_%s.txt", date));
-
-            if (!file.exists()) {
-                file.getParentFile().mkdirs();
+            for (String line : history) {
+                text.append(line).append("\n");
             }
 
-            file.createNewFile();
+            try {
+                String date = new SimpleDateFormat("dd-MM-yyyy_hh-mm-ss").format(new Date());
+                File file = new File(String.format("log/log_%s.txt", date));
 
-            output = new BufferedWriter(new FileWriter(file));
-            output.write(text.toString());
-            output.close();
-        } catch ( IOException e ) {
-            e.printStackTrace();
+                if (!file.exists()) {
+                    file.getParentFile().mkdirs();
+                }
+
+                file.createNewFile();
+
+                output = new BufferedWriter(new FileWriter(file));
+                output.write(text.toString());
+                output.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
