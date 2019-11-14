@@ -22,8 +22,6 @@ public class CmdManager extends Manager<ICommand> {
                 new CmdHelloWorld(),
                 new CmdStop()
         ));
-
-        startTerminal();
     }
 
     /**

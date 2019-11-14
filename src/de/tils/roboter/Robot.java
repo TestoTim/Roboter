@@ -25,6 +25,8 @@ public class Robot {
 
     public Robot() {
         projectInfos();
+
+        CMD_MANAGER.startTerminal();
     }
 
     /**
