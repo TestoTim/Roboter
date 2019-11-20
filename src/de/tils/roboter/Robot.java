@@ -1,6 +1,8 @@
 package de.tils.roboter;
 
+import de.madakai.eventApi.manager.EventManager;
 import de.tils.roboter.command.CmdManager;
+import de.tils.roboter.event.listener.CommandListener;
 import de.tils.roboter.utils.Logger;
 
 public class Robot {
@@ -26,7 +28,16 @@ public class Robot {
     public Robot() {
         projectInfos();
 
+        initListener();
+
         CMD_MANAGER.startTerminal();
+    }
+
+    /**
+     *  register all Listeners
+     */
+    private void initListener() {
+        EventManager.registerListener(new CommandListener());
     }
 
     /**

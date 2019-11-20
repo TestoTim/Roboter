@@ -1,9 +1,11 @@
 package de.tils.roboter.command;
 
+import de.madakai.eventApi.manager.EventManager;
 import de.tils.roboter.Robot;
 import de.tils.roboter.command.impl.CmdHelloWorld;
 import de.tils.roboter.command.impl.CmdHelp;
 import de.tils.roboter.command.impl.CmdStop;
+import de.tils.roboter.event.iml.EventCallCommand;
 import de.tils.roboter.utils.Manager;
 
 import java.util.Arrays;
@@ -34,7 +36,10 @@ public class CmdManager extends Manager<ICommand> {
         ICommand command = list.stream().filter(cmd -> cmd.getClass().getAnnotation(ICommand.Info.class).name().equalsIgnoreCase(args[0])).findFirst().orElse(null);
 
         if (command != null) {
-            command.onExecute(args);
+
+            if (EventManager.callEvent(new EventCallCommand(command)).isCancel())
+                command.onExecute(args);
+
         } else {
             Robot.LOGGER.warning("This command does not exist!");
         }
