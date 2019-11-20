@@ -29,4 +29,11 @@ public class Manager<E> {
     public void setList(List<E> list) {
         this.list = list;
     }
+
+    /**
+     *  get size of list
+     */
+    public int size() {
+        return list.size();
+    }
 }
