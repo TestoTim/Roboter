@@ -25,7 +25,7 @@ public class Robot {
         static final String[] CODER = { "Tim", "Nils" };
     }
 
-    public Robot() {
+    public Robot() { 
         projectInfos();
 
         initListener();
